@@ -10,6 +10,18 @@ class App extends StatelessWidget {
       appBar: AppBar(
         title: Text('Personal Expenses'),
       ),
+      body: Column(
+        children: [
+          Card(
+            color: Colors.blue,
+            child: Container(width: double.infinity, child: Text('CHART!')),
+            elevation: 5,
+          ),
+          Card(
+            child: Text('LIST OF TX!'),
+          )
+        ],
+      ),
     ));
   }
 }
