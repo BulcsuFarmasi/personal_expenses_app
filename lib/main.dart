@@ -4,7 +4,7 @@ import './transaction.dart';
 void main() => runApp(App());
 
 class App extends StatelessWidget {
-  final List<Transaction> transaction = [
+  final List<Transaction> transactions = [
     Transaction(
       id: 't1',
       title: 'New Shoes',
@@ -36,10 +36,12 @@ class App extends StatelessWidget {
                 child: Text('CHART!'),
                 elevation: 5,
               )),
-          Card(
-            color: Colors.red,
-            child: Text('LIST OF TX!'),
-          )
+          Column(
+              children: transactions
+                  .map((transaction) => Card(
+                        child: Text(transaction.title),
+                      ))
+                  .toList()),
         ],
       ),
     ));
