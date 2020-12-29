@@ -42,10 +42,22 @@ class App extends StatelessWidget {
                         child: Row(
                           children: [
                             Container(
-                                margin: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+                                margin: EdgeInsets.symmetric(
+                                  vertical: 15,
+                                  horizontal: 10,
+                                ),
                                 padding: EdgeInsets.all(10),
-                                decoration: BoxDecoration(border: Border.all(color: Colors.black, width: 2)),
-                                child: Text(transaction.ammout.toString())),
+                                decoration: BoxDecoration(
+                                  border: Border.all(color: Colors.purple, width: 2),
+                                ),
+                                child: Text(
+                                  transaction.ammout.toString(),
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 20,
+                                    color: Colors.purple,
+                                  ),
+                                )),
                             Column(
                               children: [Text(transaction.title), Text(transaction.date.toString())],
                             )
