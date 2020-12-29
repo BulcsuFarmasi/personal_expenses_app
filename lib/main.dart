@@ -41,7 +41,11 @@ class App extends StatelessWidget {
                   .map((transaction) => Card(
                         child: Row(
                           children: [
-                            Container(child: Text(transaction.ammout.toString())),
+                            Container(
+                                margin: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+                                padding: EdgeInsets.all(10),
+                                decoration: BoxDecoration(border: Border.all(color: Colors.black, width: 2)),
+                                child: Text(transaction.ammout.toString())),
                             Column(
                               children: [Text(transaction.title), Text(transaction.date.toString())],
                             )
