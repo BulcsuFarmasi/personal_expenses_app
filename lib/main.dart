@@ -11,13 +11,18 @@ class App extends StatelessWidget {
         title: Text('Personal Expenses'),
       ),
       body: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
+          Container(
+              width: double.infinity,
+              child: Card(
+                color: Colors.blue,
+                child: Text('CHART!'),
+                elevation: 5,
+              )),
           Card(
-            color: Colors.blue,
-            child: Container(width: double.infinity, child: Text('CHART!')),
-            elevation: 5,
-          ),
-          Card(
+            color: Colors.red,
             child: Text('LIST OF TX!'),
           )
         ],
