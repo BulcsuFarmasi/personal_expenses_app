@@ -51,7 +51,7 @@ class App extends StatelessWidget {
                                 border: Border.all(color: Colors.purple, width: 2),
                               ),
                               child: Text(
-                                transaction.ammout.toString(),
+                                '\$${transaction.ammout}',
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 20,
