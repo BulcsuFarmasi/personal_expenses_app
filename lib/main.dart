@@ -22,51 +22,60 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
         home: Scaffold(
-      appBar: AppBar(
-        title: Text('Personal Expenses'),
-      ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Container(
-              width: double.infinity,
-              child: Card(
-                color: Colors.blue,
-                child: Text('CHART!'),
-                elevation: 5,
-              )),
-          Column(
-              children: transactions
-                  .map((transaction) => Card(
-                        child: Row(
-                          children: [
-                            Container(
-                                margin: EdgeInsets.symmetric(
-                                  vertical: 15,
-                                  horizontal: 10,
+            appBar: AppBar(
+              title: Text('Personal Expenses'),
+            ),
+            body: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Container(
+                    width: double.infinity,
+                    child: Card(
+                      color: Colors.blue,
+                      child: Text('CHART!'),
+                      elevation: 5,
+                    )),
+                Column(
+                  children: transactions
+                      .map(
+                        (transaction) => Card(
+                            child: Row(children: [
+                          Container(
+                              margin: EdgeInsets.symmetric(
+                                vertical: 15,
+                                horizontal: 10,
+                              ),
+                              padding: EdgeInsets.all(10),
+                              decoration: BoxDecoration(
+                                border: Border.all(color: Colors.purple, width: 2),
+                              ),
+                              child: Text(
+                                transaction.ammout.toString(),
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20,
+                                  color: Colors.purple,
                                 ),
-                                padding: EdgeInsets.all(10),
-                                decoration: BoxDecoration(
-                                  border: Border.all(color: Colors.purple, width: 2),
-                                ),
-                                child: Text(
-                                  transaction.ammout.toString(),
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 20,
-                                    color: Colors.purple,
-                                  ),
-                                )),
-                            Column(
-                              children: [Text(transaction.title), Text(transaction.date.toString())],
-                            )
-                          ],
-                        ),
-                      ))
-                  .toList()),
-        ],
-      ),
-    ));
+                              )),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                transaction.title,
+                                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                              ),
+                              Text(
+                                transaction.date.toString(),
+                                style: TextStyle(color: Colors.grey[400]),
+                              ),
+                            ],
+                          )
+                        ])),
+                      )
+                      .toList(),
+                )
+              ],
+            )));
   }
 }
