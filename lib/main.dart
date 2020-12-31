@@ -27,7 +27,7 @@ class App extends StatelessWidget {
               title: Text('Personal Expenses'),
             ),
             body: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              // mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Container(
@@ -37,6 +37,28 @@ class App extends StatelessWidget {
                       child: Text('CHART!'),
                       elevation: 5,
                     )),
+                Card(
+                  elevation: 5,
+                  child: Container(
+                    padding: EdgeInsets.all(10),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        TextField(
+                          decoration: InputDecoration(labelText: 'Title'),
+                        ),
+                        TextField(
+                          decoration: InputDecoration(labelText: 'Amount'),
+                        ),
+                        FlatButton(
+                          child: Text('Add Transaction'),
+                          textColor: Colors.purple,
+                          onPressed: () {},
+                        )
+                      ],
+                    ),
+                  ),
+                ),
                 Column(
                   children: transactions
                       .map(
