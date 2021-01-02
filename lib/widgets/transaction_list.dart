@@ -27,7 +27,7 @@ class TransactionList extends StatelessWidget {
                   border: Border.all(color: Colors.purple, width: 2),
                 ),
                 child: Text(
-                  '\$${transactions[index].ammout}',
+                  '\$${transactions[index].ammout.toStringAsFixed(2)}',
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 20,
