@@ -6,8 +6,6 @@ import './widgets/new_transaction.dart';
 void main() => runApp(App());
 
 class App extends StatefulWidget {
-  // String titleInput;
-  // String amountInput;
 
   @override
   _AppState createState() => _AppState();
