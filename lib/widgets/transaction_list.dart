@@ -24,14 +24,17 @@ class TransactionList extends StatelessWidget {
                 ),
                 padding: EdgeInsets.all(10),
                 decoration: BoxDecoration(
-                  border: Border.all(color: Colors.purple, width: 2),
+                  border: Border.all(
+                    color: Theme.of(context).primaryColor,
+                    width: 2,
+                  ),
                 ),
                 child: Text(
                   '\$${transactions[index].ammout.toStringAsFixed(2)}',
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 20,
-                    color: Colors.purple,
+                    color: Theme.of(context).primaryColor,
                   ),
                 )),
             Column(
