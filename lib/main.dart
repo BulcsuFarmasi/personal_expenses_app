@@ -15,6 +15,7 @@ class App extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.purple,
         accentColor: Colors.amber,
+        // errorColor: Colors.red,
         fontFamily: 'Quicksand',
         textTheme: ThemeData.light().textTheme.copyWith(
               headline6: TextStyle(
@@ -46,7 +47,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final List<Transaction> transactions = [
+  final List<Transaction> _transactions = [
     //   Transaction(
     //     id: 't1',
     //     title: 'New Shoes',
@@ -62,7 +63,7 @@ class _HomePageState extends State<HomePage> {
   ];
 
   List<Transaction> get _recentTransactions {
-    return transactions.where((transaction) {
+    return _transactions.where((transaction) {
       return transaction.date.isAfter(DateTime(
         DateTime.now().year,
         DateTime.now().month,
@@ -83,7 +84,7 @@ class _HomePageState extends State<HomePage> {
       id: DateTime.now().toString(),
     );
     setState(() {
-      transactions.add(newTransaction);
+      _transactions.add(newTransaction);
     });
   }
 
@@ -98,6 +99,12 @@ class _HomePageState extends State<HomePage> {
         );
       },
     );
+  }
+
+  void _deleteTransaction(String id) {
+    setState(() {
+      _transactions.removeWhere((Transaction transaction) => transaction.id == id);
+    });
   }
 
   @override
@@ -118,7 +125,7 @@ class _HomePageState extends State<HomePage> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Chart(_recentTransactions),
-            TransactionList(transactions),
+            TransactionList(_transactions, _deleteTransaction),
           ],
         ),
       ),
