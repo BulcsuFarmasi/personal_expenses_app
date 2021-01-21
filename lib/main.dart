@@ -131,14 +131,14 @@ class _HomePageState extends State<HomePage> {
               height: (MediaQuery.of(context).size.height -
                       appBar.preferredSize.height -
                       MediaQuery.of(context).padding.top) *
-                  0.4,
+                  0.3,
             ),
             Container(
               child: TransactionList(_transactions, _deleteTransaction),
               height: (MediaQuery.of(context).size.height -
                       appBar.preferredSize.height -
                       MediaQuery.of(context).padding.top) *
-                  0.6,
+                  0.7,
             ),
           ],
         ),
