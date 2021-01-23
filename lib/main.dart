@@ -120,7 +120,8 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final bool isLandscape = MediaQuery.of(context).orientation == Orientation.landscape;
+    final MediaQueryData mediaQuery = MediaQuery.of(context);
+    final bool isLandscape = mediaQuery.orientation == Orientation.landscape;
     final appBar = AppBar(
       title: Text('Personal Expenses'),
       actions: [
@@ -132,8 +133,7 @@ class _HomePageState extends State<HomePage> {
     );
     final Widget transactionListWidget = Container(
       child: TransactionList(_transactions, _deleteTransaction),
-      height:
-          (MediaQuery.of(context).size.height - appBar.preferredSize.height - MediaQuery.of(context).padding.top) * 0.7,
+      height: (mediaQuery.size.height - appBar.preferredSize.height - mediaQuery.padding.top) * 0.7,
     );
 
     return Scaffold(
@@ -160,20 +160,14 @@ class _HomePageState extends State<HomePage> {
             if (!isLandscape)
               Container(
                 child: Chart(_recentTransactions),
-                height: (MediaQuery.of(context).size.height -
-                        appBar.preferredSize.height -
-                        MediaQuery.of(context).padding.top) *
-                    0.3,
+                height: (mediaQuery.size.height - appBar.preferredSize.height - mediaQuery.padding.top) * 0.3,
               ),
             if (!isLandscape) transactionListWidget,
             if (isLandscape)
               _showChart
                   ? Container(
                       child: Chart(_recentTransactions),
-                      height: (MediaQuery.of(context).size.height -
-                              appBar.preferredSize.height -
-                              MediaQuery.of(context).padding.top) *
-                          0.7,
+                      height: (mediaQuery.size.height - appBar.preferredSize.height - mediaQuery.padding.top) * 0.7,
                     )
                   : transactionListWidget
           ],

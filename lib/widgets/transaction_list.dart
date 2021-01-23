@@ -12,6 +12,7 @@ class TransactionList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final MediaQueryData mediaQuery = MediaQuery.of(context)
     return transactions.isEmpty
         ? LayoutBuilder(builder: (BuildContext context, BoxConstraints constrains) {
             return Column(
@@ -53,7 +54,7 @@ class TransactionList extends StatelessWidget {
                     style: Theme.of(context).textTheme.headline6,
                   ),
                   subtitle: Text(DateFormat.yMMMMd().format(transactions[index].date)),
-                  trailing: (MediaQuery.of(context).size.width > 460)
+                  trailing: (mediaQuery.size.width > 460)
                       ? FlatButton.icon(
                           icon: Icon(Icons.delete),
                           textColor: Theme.of(context).errorColor,
