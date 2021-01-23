@@ -150,40 +150,45 @@ class _HomePageState extends State<HomePage> {
       child: TransactionList(_transactions, _deleteTransaction),
       height: (mediaQuery.size.height - appBar.preferredSize.height - mediaQuery.padding.top) * 0.7,
     );
-    final Widget pageBody = SingleChildScrollView(
-      child: Column(
-        // mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          if (isLandscape)
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text('Show Chart'),
-                Switch.adaptive(
-                    activeColor: theme.accentColor,
-                    value: _showChart,
-                    onChanged: (value) {
-                      setState(() {
-                        _showChart = value;
-                      });
-                    }),
-              ],
-            ),
-          if (!isLandscape)
-            Container(
-              child: Chart(_recentTransactions),
-              height: (mediaQuery.size.height - appBar.preferredSize.height - mediaQuery.padding.top) * 0.3,
-            ),
-          if (!isLandscape) transactionListWidget,
-          if (isLandscape)
-            _showChart
-                ? Container(
-                    child: Chart(_recentTransactions),
-                    height: (mediaQuery.size.height - appBar.preferredSize.height - mediaQuery.padding.top) * 0.7,
-                  )
-                : transactionListWidget
-        ],
+    final Widget pageBody = SafeArea(
+      child: SingleChildScrollView(
+        child: Column(
+          // mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            if (isLandscape)
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'Show Chart',
+                    style: theme.textTheme.headline6,
+                  ),
+                  Switch.adaptive(
+                      activeColor: theme.accentColor,
+                      value: _showChart,
+                      onChanged: (value) {
+                        setState(() {
+                          _showChart = value;
+                        });
+                      }),
+                ],
+              ),
+            if (!isLandscape)
+              Container(
+                child: Chart(_recentTransactions),
+                height: (mediaQuery.size.height - appBar.preferredSize.height - mediaQuery.padding.top) * 0.3,
+              ),
+            if (!isLandscape) transactionListWidget,
+            if (isLandscape)
+              _showChart
+                  ? Container(
+                      child: Chart(_recentTransactions),
+                      height: (mediaQuery.size.height - appBar.preferredSize.height - mediaQuery.padding.top) * 0.7,
+                    )
+                  : transactionListWidget
+          ],
+        ),
       ),
     );
 
