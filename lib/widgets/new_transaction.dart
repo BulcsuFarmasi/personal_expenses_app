@@ -60,6 +60,7 @@ class _NewTransactionState extends State<NewTransaction> {
 
   @override
   Widget build(BuildContext context) {
+    print('build() NewTransaction');
     final ThemeData theme = Theme.of(context);
     return SingleChildScrollView(
       child: Card(
@@ -102,7 +103,10 @@ class _NewTransactionState extends State<NewTransaction> {
                             : 'Picked Date: ${DateFormat.yMd().format(_selectedDate)}',
                       ),
                     ),
-                    AdaptiveFlatButton(onPressed: _presentDatePicker, text: 'Chose Date');
+                    AdaptiveFlatButton(
+                      onPressed: _presentDatePicker,
+                      text: 'Chose Date',
+                    ),
                   ],
                 ),
               ),

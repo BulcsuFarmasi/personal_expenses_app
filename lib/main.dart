@@ -121,6 +121,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    print('build() MyHomePageState');
     final MediaQueryData mediaQuery = MediaQuery.of(context);
     final ThemeData theme = Theme.of(context);
     final bool isLandscape = mediaQuery.orientation == Orientation.landscape;

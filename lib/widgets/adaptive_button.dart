@@ -9,6 +9,7 @@ class AdaptiveFlatButton extends StatelessWidget {
   final String text;
   @override
   Widget build(BuildContext context) {
+    print('build() AdaptiveButton');
     final ThemeData theme = Theme.of(context);
     return Platform.isIOS
         ? CupertinoButton(
