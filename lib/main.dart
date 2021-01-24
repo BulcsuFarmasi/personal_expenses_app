@@ -127,8 +127,8 @@ class _HomePageState extends State<HomePage> {
     final bool isLandscape = mediaQuery.orientation == Orientation.landscape;
     final PreferredSizeWidget appBar = Platform.isIOS
         ? CupertinoNavigationBar(
-            middle: Text('Personal Expenses'),
-            trailing: Row(
+            middle: const Text('Personal Expenses'),
+            trailing:  Row(
               mainAxisSize: MainAxisSize.min,
               children: [
                 GestureDetector(
@@ -139,7 +139,7 @@ class _HomePageState extends State<HomePage> {
             ),
           )
         : AppBar(
-            title: Text('Personal Expenses'),
+            title: const Text('Personal Expenses'),
             actions: [
               IconButton(
                 icon: Icon(Icons.add),

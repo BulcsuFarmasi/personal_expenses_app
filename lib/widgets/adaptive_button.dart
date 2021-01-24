@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class AdaptiveFlatButton extends StatelessWidget {
-  AdaptiveFlatButton({this.onPressed, this.text});
+  const AdaptiveFlatButton({this.onPressed, this.text});
   final Function onPressed;
   final String text;
   @override
