@@ -152,34 +152,42 @@ class _HomePageState extends State<HomePage> {
     ];
   }
 
+  PreferredSizeWidget _buildCupertinoNavigationBar(String title, Function addNewTransaction) {
+    return CupertinoNavigationBar(
+      middle: Text(title),
+      trailing: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          GestureDetector(
+            child: Icon(CupertinoIcons.add),
+            onTap: () =>  addNewTransaction,
+          )
+        ],
+      ),
+    );
+  }
+  PreferredSizeWidget _buildAppBar(String title, Function addNewTransaction) {
+    return AppBar(
+      title: Text(title),
+      actions: [
+        IconButton(
+          icon: Icon(Icons.add),
+          onPressed: () => addNewTransaction,
+        ),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     print('build() MyHomePageState');
     final MediaQueryData mediaQuery = MediaQuery.of(context);
     final ThemeData theme = Theme.of(context);
     final bool isLandscape = mediaQuery.orientation == Orientation.landscape;
+    final String title = 'Personal Expenses';
     final PreferredSizeWidget appBar = Platform.isIOS
-        ? CupertinoNavigationBar(
-            middle: const Text('Personal Expenses'),
-            trailing: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                GestureDetector(
-                  child: Icon(CupertinoIcons.add),
-                  onTap: () => _startAddNewTransaction(context),
-                )
-              ],
-            ),
-          )
-        : AppBar(
-            title: const Text('Personal Expenses'),
-            actions: [
-              IconButton(
-                icon: Icon(Icons.add),
-                onPressed: () => _startAddNewTransaction(context),
-              ),
-            ],
-          );
+        ? _buildCupertinoNavigationBar(title, () => _startAddNewTransaction(context))
+        : _buildAppBar(title, () => _startAddNewTransaction(context));
     final Widget transactionListWidget = Container(
       child: TransactionList(_transactions, _deleteTransaction),
       height: (mediaQuery.size.height - appBar.preferredSize.height - mediaQuery.padding.top) * 0.7,
