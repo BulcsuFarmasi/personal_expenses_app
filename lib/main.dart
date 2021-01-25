@@ -119,6 +119,39 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  List<Widget> _buildLandscapeContent(ThemeData theme, Widget transactionListWidget) {
+    return [
+      Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            'Show Chart',
+            style: theme.textTheme.headline6,
+          ),
+          Switch.adaptive(
+              activeColor: theme.accentColor,
+              value: _showChart,
+              onChanged: (value) {
+                setState(() {
+                  _showChart = value;
+                });
+              }),
+        ],
+      ),
+      transactionListWidget
+    ];
+  }
+
+  List<Widget> _buildPortaitContent(MediaQueryData mediaQuery, AppBar appBar, Widget transactionListWidget) {
+    return [
+      Container(
+        child: Chart(_recentTransactions),
+        height: (mediaQuery.size.height - appBar.preferredSize.height - mediaQuery.padding.top) * 0.3,
+      ),
+      transactionListWidget,
+    ];
+  }
+
   @override
   Widget build(BuildContext context) {
     print('build() MyHomePageState');
@@ -128,7 +161,7 @@ class _HomePageState extends State<HomePage> {
     final PreferredSizeWidget appBar = Platform.isIOS
         ? CupertinoNavigationBar(
             middle: const Text('Personal Expenses'),
-            trailing:  Row(
+            trailing: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
                 GestureDetector(
@@ -158,36 +191,16 @@ class _HomePageState extends State<HomePage> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             if (isLandscape)
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'Show Chart',
-                    style: theme.textTheme.headline6,
-                  ),
-                  Switch.adaptive(
-                      activeColor: theme.accentColor,
-                      value: _showChart,
-                      onChanged: (value) {
-                        setState(() {
-                          _showChart = value;
-                        });
-                      }),
-                ],
+              ..._buildLandscapeContent(
+                theme,
+                transactionListWidget,
               ),
             if (!isLandscape)
-              Container(
-                child: Chart(_recentTransactions),
-                height: (mediaQuery.size.height - appBar.preferredSize.height - mediaQuery.padding.top) * 0.3,
+              ..._buildPortaitContent(
+                mediaQuery,
+                appBar,
+                transactionListWidget,
               ),
-            if (!isLandscape) transactionListWidget,
-            if (isLandscape)
-              _showChart
-                  ? Container(
-                      child: Chart(_recentTransactions),
-                      height: (mediaQuery.size.height - appBar.preferredSize.height - mediaQuery.padding.top) * 0.7,
-                    )
-                  : transactionListWidget
           ],
         ),
       ),
