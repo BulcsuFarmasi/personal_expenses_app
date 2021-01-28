@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-
-
 import '../models/transaction.dart';
 import './transaction_item.dart';
 
@@ -14,7 +12,8 @@ class TransactionList extends StatelessWidget {
   Widget build(BuildContext context) {
     print('build() TransactionList');
     return transactions.isEmpty
-        ? LayoutBuilder(builder: (BuildContext context, BoxConstraints constrains) {
+        ? LayoutBuilder(
+            builder: (BuildContext context, BoxConstraints constrains) {
             return Column(
               children: [
                 Text(
@@ -36,14 +35,20 @@ class TransactionList extends StatelessWidget {
               ],
             );
           })
-        : ListView.builder(
-            itemBuilder: (context, index) {
+        : ListView(
+            children: transactions.map((Transaction transaction) {
               return TransactionItem(
-                transaction: transactions[index],
+                key: UniqueKey(),
+                transaction: transaction,
                 deleteTransaction: deleteTransaction,
               );
-            },
-            itemCount: transactions.length,
+            }).toList(),
           );
+    // : ListView.builder(
+    //     itemBuilder: (context, index) {
+    //
+    //     },
+    //     itemCount: transactions.length,
+    //   );
   }
 }
