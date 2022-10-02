@@ -58,18 +58,6 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
   final List<Transaction> _transactions = [
-    //   Transaction(
-    //     id: 't1',
-    //     title: 'New Shoes',
-    //     ammout: 69.99,
-    //     date: DateTime.now(),
-    //   ),
-    //   Transaction(
-    //     id: 't2',
-    //     title: 'Weekly Groceries',
-    //     ammout: 16.53,
-    //     date: DateTime.now(),
-    //   ),
   ];
 
   bool _showChart = false;
@@ -77,7 +65,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addObserver(this);
+    WidgetsBinding.instance!.addObserver(this);
   }
 
   @override
@@ -88,7 +76,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
   @override
   void dispose () {
     super.dispose();
-    WidgetsBinding.instance.removeObserver(this);
+    WidgetsBinding.instance!.removeObserver(this);
   }
 
   List<Transaction> get _recentTransactions {
@@ -108,7 +96,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
   void _addNewTransaction(String title, double amount, DateTime chosenDate) {
     final newTransaction = Transaction(
       title: title,
-      ammout: amount,
+      amount: amount,
       date: chosenDate,
       id: DateTime.now().toString(),
     );
@@ -118,6 +106,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
   }
 
   void _startAddNewTransaction(BuildContext context) {
+    print(context);
     showModalBottomSheet(
       context: context,
       builder: (_) {
@@ -223,7 +212,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
             if (!isLandscape)
               ..._buildPortaitContent(
                 mediaQuery,
-                appBar,
+                appBar as AppBar,
                 transactionListWidget,
               ),
           ],
@@ -234,7 +223,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
     return Platform.isIOS
         ? CupertinoPageScaffold(
             child: pageBody,
-            navigationBar: appBar,
+            navigationBar: appBar as ObstructingPreferredSizeWidget?,
           )
         : Scaffold(
             appBar: appBar,
