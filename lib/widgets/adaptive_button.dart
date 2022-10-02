@@ -5,27 +5,29 @@ import 'package:flutter/material.dart';
 
 class AdaptiveFlatButton extends StatelessWidget {
   const AdaptiveFlatButton({this.onPressed, this.text});
-  final Function? onPressed;
+
+  final VoidCallback? onPressed;
   final String? text;
+
   @override
   Widget build(BuildContext context) {
     print('build() AdaptiveButton');
     final ThemeData theme = Theme.of(context);
     return Platform.isIOS
         ? CupertinoButton(
-            onPressed: onPressed as void Function()?,
+            onPressed: onPressed,
             child: Text(
               text!,
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
           )
-        : FlatButton(
-            onPressed: onPressed as void Function()?,
+        : TextButton(
+            onPressed: onPressed,
             child: Text(
               text!,
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
-            textColor: theme.primaryColor,
+            style: TextButton.styleFrom(foregroundColor: theme.primaryColor),
           );
   }
 }
