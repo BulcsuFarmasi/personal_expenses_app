@@ -14,39 +14,38 @@ void main() {
   //   DeviceOrientation.portraitUp,
   //   DeviceOrientation.portraitDown,
   // ]);
-  runApp(App());
+  runApp(const App());
 }
 
 class App extends StatelessWidget {
-  const App({Key? key}) : super(key: key);
+  const App({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: HomePage(),
+      home: const HomePage(),
       theme: ThemeData(
-        primarySwatch: Colors.purple,
-        accentColor: Colors.amber,
-        // errorColor: Colors.red,
         fontFamily: 'Quicksand',
         textTheme: ThemeData.light().textTheme.copyWith(
-              headline6: TextStyle(
+              headline6: const TextStyle(
                 fontFamily: 'OpenSans',
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
               ),
-              button: TextStyle(
+              button: const TextStyle(
                 color: Colors.white,
               ),
             ),
         appBarTheme: AppBarTheme(
             textTheme: ThemeData.light().textTheme.copyWith(
-                  headline6: TextStyle(
+                  headline6: const TextStyle(
                     fontFamily: 'OpenSans',
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
                   ),
                 )),
+        colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.purple)
+            .copyWith(secondary: Colors.amber),
       ),
       title: 'Personal Expenses',
     );
@@ -54,13 +53,14 @@ class App extends StatelessWidget {
 }
 
 class HomePage extends StatefulWidget {
+  const HomePage({super.key});
+
   @override
-  _HomePageState createState() => _HomePageState();
+  State<HomePage> createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
-  final List<Transaction> _transactions = [
-  ];
+  final List<Transaction> _transactions = [];
 
   bool _showChart = false;
 
@@ -71,12 +71,12 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
   }
 
   @override
-  void didChangeAppLifecycleState (AppLifecycleState appLifecycleState) {
+  void didChangeAppLifecycleState(AppLifecycleState appLifecycleState) {
     print(appLifecycleState);
   }
 
   @override
-  void dispose () {
+  void dispose() {
     super.dispose();
     WidgetsBinding.instance.removeObserver(this);
   }
@@ -88,7 +88,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
         DateTime.now().month,
         DateTime.now().day,
       ).subtract(
-        Duration(
+        const Duration(
           days: 7,
         ),
       ));
@@ -114,8 +114,8 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
       builder: (_) {
         return GestureDetector(
           onTap: () {},
-          child: NewTransaction(_addNewTransaction),
           behavior: HitTestBehavior.opaque,
+          child: NewTransaction(_addNewTransaction),
         );
       },
     );
@@ -123,11 +123,13 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
 
   void _deleteTransaction(String id) {
     setState(() {
-      _transactions.removeWhere((Transaction transaction) => transaction.id == id);
+      _transactions
+          .removeWhere((Transaction transaction) => transaction.id == id);
     });
   }
 
-  List<Widget> _buildLandscapeContent(ThemeData theme, Widget transactionListWidget) {
+  List<Widget> _buildLandscapeContent(
+      ThemeData theme, Widget transactionListWidget) {
     return [
       Row(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -137,7 +139,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
             style: theme.textTheme.headline6,
           ),
           Switch.adaptive(
-              activeColor: theme.accentColor,
+              activeColor: theme.colorScheme.secondary,
               value: _showChart,
               onChanged: (value) {
                 setState(() {
@@ -150,36 +152,42 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
     ];
   }
 
-  List<Widget> _buildPortaitContent(MediaQueryData mediaQuery, AppBar appBar, Widget transactionListWidget) {
+  List<Widget> _buildPortaitContent(
+      MediaQueryData mediaQuery, AppBar appBar, Widget transactionListWidget) {
     return [
-      Container(
+      SizedBox(
+        height: (mediaQuery.size.height -
+                appBar.preferredSize.height -
+                mediaQuery.padding.top) *
+            0.3,
         child: Chart(_recentTransactions),
-        height: (mediaQuery.size.height - appBar.preferredSize.height - mediaQuery.padding.top) * 0.3,
       ),
       transactionListWidget,
     ];
   }
 
-  PreferredSizeWidget _buildCupertinoNavigationBar(String title, Function addNewTransaction) {
+  PreferredSizeWidget _buildCupertinoNavigationBar(
+      String title, Function addNewTransaction) {
     return CupertinoNavigationBar(
       middle: Text(title),
       trailing: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
           GestureDetector(
-            child: Icon(CupertinoIcons.add),
-            onTap: () =>  addNewTransaction,
+            child: const Icon(CupertinoIcons.add),
+            onTap: () => addNewTransaction,
           )
         ],
       ),
     );
   }
+
   PreferredSizeWidget _buildAppBar(String title, Function addNewTransaction) {
     return AppBar(
       title: Text(title),
       actions: [
         IconButton(
-          icon: Icon(Icons.add),
+          icon: const Icon(Icons.add),
           onPressed: () => addNewTransaction,
         ),
       ],
@@ -192,13 +200,17 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
     final MediaQueryData mediaQuery = MediaQuery.of(context);
     final ThemeData theme = Theme.of(context);
     final bool isLandscape = mediaQuery.orientation == Orientation.landscape;
-    final String title = 'Personal Expenses';
+    const String title = 'Personal Expenses';
     final PreferredSizeWidget appBar = Platform.isIOS
-        ? _buildCupertinoNavigationBar(title, () => _startAddNewTransaction(context))
+        ? _buildCupertinoNavigationBar(
+            title, () => _startAddNewTransaction(context))
         : _buildAppBar(title, () => _startAddNewTransaction(context));
-    final Widget transactionListWidget = Container(
+    final Widget transactionListWidget = SizedBox(
+      height: (mediaQuery.size.height -
+              appBar.preferredSize.height -
+              mediaQuery.padding.top) *
+          0.7,
       child: TransactionList(_transactions, _deleteTransaction),
-      height: (mediaQuery.size.height - appBar.preferredSize.height - mediaQuery.padding.top) * 0.7,
     );
     final Widget pageBody = SafeArea(
       child: SingleChildScrollView(
@@ -224,17 +236,18 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
 
     return Platform.isIOS
         ? CupertinoPageScaffold(
-            child: pageBody,
             navigationBar: appBar as ObstructingPreferredSizeWidget?,
+            child: pageBody,
           )
         : Scaffold(
             appBar: appBar,
             body: pageBody,
-            floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+            floatingActionButtonLocation:
+                FloatingActionButtonLocation.centerFloat,
             floatingActionButton: Platform.isIOS
                 ? Container()
                 : FloatingActionButton(
-                    child: Icon(Icons.add),
+                    child: const Icon(Icons.add),
                     onPressed: () => _startAddNewTransaction(context),
                   ),
           );
