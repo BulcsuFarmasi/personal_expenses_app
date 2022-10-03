@@ -15,7 +15,8 @@ class TransactionItem extends StatefulWidget {
   final Transaction transaction;
   final Function deleteTransaction;
 
-  _TransactionItemState createState() => _TransactionItemState();
+  @override
+  State<TransactionItem> createState() => _TransactionItemState();
 }
 
 class _TransactionItemState extends State<TransactionItem> {
@@ -64,7 +65,7 @@ class _TransactionItemState extends State<TransactionItem> {
                     widget.deleteTransaction(widget.transaction.id),
                 label: const Text('Delete Transaction'))
             : IconButton(
-                icon: Icon(Icons.delete),
+                icon: const Icon(Icons.delete),
                 color: Theme.of(context).errorColor,
                 onPressed: () =>
                     widget.deleteTransaction(widget.transaction.id),

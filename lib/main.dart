@@ -23,31 +23,37 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: const HomePage(),
-      theme: ThemeData(
-        fontFamily: 'Quicksand',
-        textTheme: ThemeData.light().textTheme.copyWith(
-              headline6: const TextStyle(
-                fontFamily: 'OpenSans',
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
-              button: const TextStyle(
-                color: Colors.white,
-              ),
+        home: const HomePage(),
+        theme: ThemeData(
+          fontFamily: 'Quicksand',
+          textTheme: ThemeData
+              .light()
+              .textTheme
+              .copyWith(
+            headline6: const TextStyle(
+              fontFamily: 'OpenSans',
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
             ),
-        appBarTheme: AppBarTheme(
-            textTheme: ThemeData.light().textTheme.copyWith(
-                  headline6: const TextStyle(
-                    fontFamily: 'OpenSans',
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
-                )),
-        colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.purple)
-            .copyWith(secondary: Colors.amber),
-      ),
-      title: 'Personal Expenses',
+            button: const TextStyle(
+              color: Colors.white,
+            ),
+          ),
+          appBarTheme: AppBarTheme(
+              toolbarTextStyle: ThemeData
+                  .light()
+                  .textTheme
+                  .
+              headline6
+                  ?.merge(const TextStyle(
+                fontFamily: 'OpenSans',
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ))
+          ),
+          colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.purple)
+              .copyWith(secondary: Colors.amber),
+        ), title: 'Personal Expenses'
     );
   }
 }
@@ -84,9 +90,15 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
   List<Transaction> get _recentTransactions {
     return _transactions.where((transaction) {
       return transaction.date.isAfter(DateTime(
-        DateTime.now().year,
-        DateTime.now().month,
-        DateTime.now().day,
+        DateTime
+            .now()
+            .year,
+        DateTime
+            .now()
+            .month,
+        DateTime
+            .now()
+            .day,
       ).subtract(
         const Duration(
           days: 7,
@@ -128,8 +140,8 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
     });
   }
 
-  List<Widget> _buildLandscapeContent(
-      ThemeData theme, Widget transactionListWidget) {
+  List<Widget> _buildLandscapeContent(ThemeData theme,
+      Widget transactionListWidget) {
     return [
       Row(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -152,13 +164,13 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
     ];
   }
 
-  List<Widget> _buildPortaitContent(
-      MediaQueryData mediaQuery, AppBar appBar, Widget transactionListWidget) {
+  List<Widget> _buildPortaitContent(MediaQueryData mediaQuery, AppBar appBar,
+      Widget transactionListWidget) {
     return [
       SizedBox(
         height: (mediaQuery.size.height -
-                appBar.preferredSize.height -
-                mediaQuery.padding.top) *
+            appBar.preferredSize.height -
+            mediaQuery.padding.top) *
             0.3,
         child: Chart(_recentTransactions),
       ),
@@ -166,8 +178,8 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
     ];
   }
 
-  PreferredSizeWidget _buildCupertinoNavigationBar(
-      String title, Function addNewTransaction) {
+  PreferredSizeWidget _buildCupertinoNavigationBar(String title,
+      Function addNewTransaction) {
     return CupertinoNavigationBar(
       middle: Text(title),
       trailing: Row(
@@ -203,12 +215,12 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
     const String title = 'Personal Expenses';
     final PreferredSizeWidget appBar = Platform.isIOS
         ? _buildCupertinoNavigationBar(
-            title, () => _startAddNewTransaction(context))
+        title, () => _startAddNewTransaction(context))
         : _buildAppBar(title, () => _startAddNewTransaction(context));
     final Widget transactionListWidget = SizedBox(
       height: (mediaQuery.size.height -
-              appBar.preferredSize.height -
-              mediaQuery.padding.top) *
+          appBar.preferredSize.height -
+          mediaQuery.padding.top) *
           0.7,
       child: TransactionList(_transactions, _deleteTransaction),
     );
@@ -236,20 +248,20 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
 
     return Platform.isIOS
         ? CupertinoPageScaffold(
-            navigationBar: appBar as ObstructingPreferredSizeWidget?,
-            child: pageBody,
-          )
+      navigationBar: appBar as ObstructingPreferredSizeWidget?,
+      child: pageBody,
+    )
         : Scaffold(
-            appBar: appBar,
-            body: pageBody,
-            floatingActionButtonLocation:
-                FloatingActionButtonLocation.centerFloat,
-            floatingActionButton: Platform.isIOS
-                ? Container()
-                : FloatingActionButton(
-                    child: const Icon(Icons.add),
-                    onPressed: () => _startAddNewTransaction(context),
-                  ),
-          );
+      appBar: appBar,
+      body: pageBody,
+      floatingActionButtonLocation:
+      FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: Platform.isIOS
+          ? Container()
+          : FloatingActionButton(
+        child: const Icon(Icons.add),
+        onPressed: () => _startAddNewTransaction(context),
+      ),
+    );
   }
 }

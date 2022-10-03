@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class NoTransactions extends StatelessWidget {
 
-  const NoTransactions();
+  const NoTransactions({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -14,12 +14,10 @@ class NoTransactions extends StatelessWidget {
                 'No transaction added yet!',
                 style: Theme.of(context).textTheme.headline6,
               ),
-              // TODO
-              // unite with either of its siblings
               const SizedBox(
                 height: 20,
               ),
-              Container(
+              SizedBox(
                 height: constrains.maxHeight * 0.6,
                 child: Image.asset(
                   'assets/images/waiting.png',

@@ -4,10 +4,10 @@ import 'package:intl/intl.dart';
 class NewTransaction extends StatefulWidget {
   final Function addTx;
 
-  NewTransaction(this.addTx);
+  const NewTransaction(this.addTx, {super.key});
 
   @override
-  _NewTransactionState createState() => _NewTransactionState();
+  State<NewTransaction> createState() => _NewTransactionState();
 }
 
 class _NewTransactionState extends State<NewTransaction> {
@@ -57,12 +57,12 @@ class _NewTransactionState extends State<NewTransaction> {
     return Card(
       elevation: 5,
       child: Container(
-        padding: EdgeInsets.all(10),
+        padding: const EdgeInsets.all(10),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: <Widget>[
             TextField(
-              decoration: InputDecoration(labelText: 'Title'),
+              decoration: const InputDecoration(labelText: 'Title'),
               controller: _titleController,
               onSubmitted: (_) => _submitData(),
               // onChanged: (val) {
@@ -70,13 +70,13 @@ class _NewTransactionState extends State<NewTransaction> {
               // },
             ),
             TextField(
-              decoration: InputDecoration(labelText: 'Amount'),
+              decoration: const InputDecoration(labelText: 'Amount'),
               controller: _amountController,
               keyboardType: TextInputType.number,
               onSubmitted: (_) => _submitData(),
               // onChanged: (val) => amountInput = val,
             ),
-            Container(
+            SizedBox(
               height: 70,
               child: Row(
                 children: <Widget>[
@@ -90,24 +90,24 @@ class _NewTransactionState extends State<NewTransaction> {
                   TextButton(
                     style: TextButton.styleFrom(
                         foregroundColor: Theme.of(context).primaryColor),
-                    child: Text(
+                    onPressed: _presentDatePicker,
+                    child: const Text(
                       'Choose Date',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    onPressed: _presentDatePicker,
                   ),
                 ],
               ),
             ),
             ElevatedButton(
-              child: Text('Add Transaction'),
               style: ElevatedButton.styleFrom(
                 backgroundColor: Theme.of(context).primaryColor,
                 foregroundColor: Theme.of(context).textTheme.button?.color,
               ),
               onPressed: _submitData,
+              child: const Text('Add Transaction'),
             ),
           ],
         ),
