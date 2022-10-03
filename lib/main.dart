@@ -105,7 +105,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
     });
   }
 
-  void _startAddNewTransaction(BuildContext context) {
+  void _startAddNewTransaction() {
     print(context);
     showModalBottomSheet(
       context: context,
@@ -165,7 +165,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
   }
 
   PreferredSizeWidget _buildCupertinoNavigationBar(
-      String title, Function addNewTransaction) {
+      String title, VoidCallback addNewTransaction) {
     return CupertinoNavigationBar(
       middle: Text(title),
       trailing: Row(
@@ -173,23 +173,21 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
         children: [
           GestureDetector(
             child: const Icon(CupertinoIcons.add),
-            onTap: () => addNewTransaction,
+            onTap: addNewTransaction,
           )
         ],
       ),
     );
   }
 
-  PreferredSizeWidget _buildAppBar(String title, Function addNewTransaction) {
+  PreferredSizeWidget _buildAppBar(
+      String title, VoidCallback addNewTransaction) {
     return AppBar(
       title: Text(title),
       actions: [
         IconButton(
           icon: const Icon(Icons.add),
-          onPressed: () => addNewTransaction,
-        ),
-      ],
-    );
+          onPressed: addNewTransaction,),],);
   }
 
   @override
@@ -200,9 +198,8 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
     final bool isLandscape = mediaQuery.orientation == Orientation.landscape;
     const String title = 'Personal Expenses';
     final PreferredSizeWidget appBar = Platform.isIOS
-        ? _buildCupertinoNavigationBar(
-            title, () => _startAddNewTransaction(context))
-        : _buildAppBar(title, () => _startAddNewTransaction(context));
+        ? _buildCupertinoNavigationBar(title, _startAddNewTransaction)
+        : _buildAppBar(title, _startAddNewTransaction);
     final Widget transactionListWidget = SizedBox(
       height: (mediaQuery.size.height -
               appBar.preferredSize.height -
@@ -246,7 +243,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
                 ? Container()
                 : FloatingActionButton(
                     child: const Icon(Icons.add),
-                    onPressed: () => _startAddNewTransaction(context),
+                    onPressed: _startAddNewTransaction,
                   ),
           );
   }
