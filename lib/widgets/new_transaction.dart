@@ -89,7 +89,7 @@ class _NewTransactionState extends State<NewTransaction> {
                   ),
                   TextButton(
                     style: TextButton.styleFrom(
-                        foregroundColor: Theme.of(context).primaryColor),
+                        foregroundColor: Theme.of(context).colorScheme.primary),
                     onPressed: _presentDatePicker,
                     child: const Text(
                       'Choose Date',
@@ -103,7 +103,7 @@ class _NewTransactionState extends State<NewTransaction> {
             ),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
-                backgroundColor: Theme.of(context).primaryColor,
+                backgroundColor: Theme.of(context).colorScheme.primary,
                 foregroundColor: Theme.of(context).textTheme.button?.color,
               ),
               onPressed: _submitData,

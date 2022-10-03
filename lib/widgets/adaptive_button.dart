@@ -23,7 +23,7 @@ class AdaptiveFlatButton extends StatelessWidget {
           )
         : TextButton(
             onPressed: onPressed,
-            style: TextButton.styleFrom(foregroundColor: theme.primaryColor),
+            style: TextButton.styleFrom(foregroundColor: theme.colorScheme.primary),
             child: Text(
               text!,
               style: const TextStyle(fontWeight: FontWeight.bold),

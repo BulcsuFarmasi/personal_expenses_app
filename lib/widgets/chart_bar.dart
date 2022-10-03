@@ -40,7 +40,7 @@ class ChartBar extends StatelessWidget {
                   heightFactor: spendingPercentageOfTotal,
                   child: Container(
                     decoration: BoxDecoration(
-                      color: Theme.of(context).primaryColor,
+                      color: Theme.of(context).colorScheme.primary,
                       borderRadius: BorderRadius.circular(10),
                     ),
                   ),
