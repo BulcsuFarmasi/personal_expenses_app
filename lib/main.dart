@@ -127,7 +127,11 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
   }
 
   List<Widget> _buildLandscapeContent(
-      ThemeData theme, Widget transactionListWidget) {
+    MediaQueryData mediaQuery,
+    AppBar appBar,
+    ThemeData theme,
+    Widget transactionListWidget,
+  ) {
     return [
       Row(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -146,12 +150,23 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
               }),
         ],
       ),
+      if (_showChart)
+        SizedBox(
+          height: (mediaQuery.size.height -
+                  appBar.preferredSize.height -
+                  mediaQuery.padding.top) *
+              0.7,
+          child: Chart(_recentTransactions),
+        ),
       transactionListWidget
     ];
   }
 
   List<Widget> _buildPortaitContent(
-      MediaQueryData mediaQuery, AppBar appBar, Widget transactionListWidget) {
+    MediaQueryData mediaQuery,
+    AppBar appBar,
+    Widget transactionListWidget,
+  ) {
     return [
       SizedBox(
         height: (mediaQuery.size.height -
@@ -187,7 +202,10 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
       actions: [
         IconButton(
           icon: const Icon(Icons.add),
-          onPressed: addNewTransaction,),],);
+          onPressed: addNewTransaction,
+        ),
+      ],
+    );
   }
 
   @override
@@ -215,6 +233,8 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
           children: [
             if (isLandscape)
               ..._buildLandscapeContent(
+                mediaQuery,
+                appBar as AppBar,
                 theme,
                 transactionListWidget,
               ),
