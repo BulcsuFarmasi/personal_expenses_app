@@ -12,7 +12,6 @@ class AdaptiveFlatButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     print('build() AdaptiveButton');
-    final ThemeData theme = Theme.of(context);
     return Platform.isIOS
         ? CupertinoButton(
             onPressed: onPressed,
@@ -23,7 +22,7 @@ class AdaptiveFlatButton extends StatelessWidget {
           )
         : TextButton(
             onPressed: onPressed,
-            style: TextButton.styleFrom(foregroundColor: theme.colorScheme.primary),
+            style: TextButton.styleFrom(foregroundColor: Theme.of(context).colorScheme.primary),
             child: Text(
               text!,
               style: const TextStyle(fontWeight: FontWeight.bold),

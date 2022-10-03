@@ -54,6 +54,7 @@ class _NewTransactionState extends State<NewTransaction> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Card(
       elevation: 5,
       child: Container(
@@ -89,7 +90,7 @@ class _NewTransactionState extends State<NewTransaction> {
                   ),
                   TextButton(
                     style: TextButton.styleFrom(
-                        foregroundColor: Theme.of(context).colorScheme.primary),
+                        foregroundColor: theme.colorScheme.primary),
                     onPressed: _presentDatePicker,
                     child: const Text(
                       'Choose Date',
@@ -103,8 +104,8 @@ class _NewTransactionState extends State<NewTransaction> {
             ),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
-                backgroundColor: Theme.of(context).colorScheme.primary,
-                foregroundColor: Theme.of(context).textTheme.button?.color,
+                backgroundColor: theme.colorScheme.primary,
+                foregroundColor: theme.textTheme.button?.color,
               ),
               onPressed: _submitData,
               child: const Text('Add Transaction'),
