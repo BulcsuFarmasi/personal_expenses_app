@@ -2,8 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-
-import '../models/transaction.dart';
+import 'package:personal_expenses_app/models/transaction.dart';
 
 class TransactionItem extends StatefulWidget {
   const TransactionItem({
@@ -15,7 +14,8 @@ class TransactionItem extends StatefulWidget {
   final Transaction transaction;
   final Function deleteTransaction;
 
-  _TransactionItemState createState() => _TransactionItemState();
+  @override
+  State<TransactionItem> createState() => _TransactionItemState();
 }
 
 class _TransactionItemState extends State<TransactionItem> {
@@ -34,7 +34,7 @@ class _TransactionItemState extends State<TransactionItem> {
 
   @override
   Widget build(BuildContext context) {
-    final MediaQueryData mediaQuery = MediaQuery.of(context);
+    final theme = Theme.of(context);
     return Card(
       elevation: 5,
       margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 5),
@@ -51,21 +51,21 @@ class _TransactionItemState extends State<TransactionItem> {
         ),
         title: Text(
           widget.transaction.title,
-          style: Theme.of(context).textTheme.headline6,
+          style: theme.textTheme.headline6,
         ),
         subtitle: Text(
           DateFormat.yMMMMd().format(widget.transaction.date),
         ),
-        trailing: (mediaQuery.size.width > 460)
-            ? FlatButton.icon(
+        trailing: (MediaQuery.of(context).size.width > 460)
+            ? TextButton.icon(
                 icon: const Icon(Icons.delete),
-                textColor: Theme.of(context).errorColor,
+                style:TextButton.styleFrom(foregroundColor: theme.errorColor),
                 onPressed: () =>
                     widget.deleteTransaction(widget.transaction.id),
                 label: const Text('Delete Transaction'))
             : IconButton(
-                icon: Icon(Icons.delete),
-                color: Theme.of(context).errorColor,
+                icon: const Icon(Icons.delete),
+                color: theme.errorColor,
                 onPressed: () =>
                     widget.deleteTransaction(widget.transaction.id),
               ),

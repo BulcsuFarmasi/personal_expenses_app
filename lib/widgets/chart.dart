@@ -1,34 +1,43 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import '../models/transaction.dart';
-import './chart_bar.dart';
+import 'package:personal_expenses_app/models/daily_spending.dart';
+import 'package:personal_expenses_app/models/transaction.dart';
+import 'package:personal_expenses_app/widgets/chart_bar.dart';
 
 class Chart extends StatelessWidget {
-  Chart(this.recentTransactions){
+  Chart(this.recentTransactions, {super.key}) {
     print('Constructor() Chart');
   }
 
   final List<Transaction> recentTransactions;
-  List<Map<String, Object>> get groupedTranactionValues {
-    return List.generate(7, (index) {
-      final weekDay = DateTime.now().subtract(Duration(days: index));
 
-      double totalSum = 0.00;
+  List<DailySpending> get groupedTransactionValues {
+    Map<DateTime, DailySpending> dailySpendingsByDay = {};
 
-      for (var i = 0; i < recentTransactions.length; i++) {
-        if (recentTransactions[i].date.day == weekDay.day &&
-            recentTransactions[i].date.month == weekDay.month &&
-            recentTransactions[i].date.year == weekDay.year) {
-          totalSum += recentTransactions[i].amount;
-        }
-      }
-      return {'day': DateFormat.E().format(weekDay).substring(0, 1), 'amount': totalSum};
-    }).reversed.toList();
+    const earlyestFareTimeDifference = 7;
+
+    for (int i = earlyestFareTimeDifference - 1; i >= 0; i--) {
+      final weekDay = DateTime.now().subtract(Duration(days: i));
+      final weekDayMidnight = DateTime(weekDay.year, weekDay.month,weekDay.day);
+      dailySpendingsByDay[weekDayMidnight] =
+          DailySpending(DateFormat.E().format(weekDay).substring(0, 1), 0);
+    }
+
+    for (Transaction recentTransaction in recentTransactions) {
+      final transactionDate = DateTime(
+          recentTransaction.date.year, recentTransaction.date.month,
+          recentTransaction.date.day);
+      dailySpendingsByDay[transactionDate]!.amount = recentTransaction.amount;
+    }
+
+    return dailySpendingsByDay.values.toList();
   }
 
+
   double get totalSpending {
-    return groupedTranactionValues.fold(0.0, (sum, transactionValue) {
-      return sum += transactionValue['amount'] as num;
+    return groupedTransactionValues.fold(
+        0.0, (double sum, DailySpending transactionValue) {
+      return sum += transactionValue.amount;
     });
   }
 
@@ -36,24 +45,25 @@ class Chart extends StatelessWidget {
   Widget build(BuildContext context) {
     print('build() Chart');
     return Card(
-        elevation: 6,
-        margin: const EdgeInsets.all(20),
-        child: Padding(
-          padding: const EdgeInsets.all(10),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: groupedTranactionValues.map((transactionValue) {
-              return Flexible(
-                fit: FlexFit.tight,
-                child: ChartBar(
-                  transactionValue['day'] as String?,
-                  transactionValue['amount'] as double?,
-                  totalSpending == 0.0 ? 0.0 : (transactionValue['amount'] as double) / totalSpending,
-                ),
-              );
-            }).toList(),
-          ),
+      elevation: 6,
+      margin: const EdgeInsets.all(20),
+      child: Padding(
+        padding: const EdgeInsets.all(10),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: groupedTransactionValues.map((transactionValue) {
+            return Flexible(
+              fit: FlexFit.tight,
+              child: ChartBar(
+                transactionValue.dayAbbrivation,
+                transactionValue.amount,
+                totalSpending == 0.0 ? 0.0 : transactionValue
+                    .amount / totalSpending,
+              ),
+            );
+          }).toList(),
         ),
-      );
+      ),
+    );
   }
 }
