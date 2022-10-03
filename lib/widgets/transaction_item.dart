@@ -2,8 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-
-import '../models/transaction.dart';
+import 'package:personal_expenses_app/models/transaction.dart';
 
 class TransactionItem extends StatefulWidget {
   const TransactionItem({
