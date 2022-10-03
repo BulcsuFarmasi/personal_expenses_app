@@ -187,8 +187,8 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
         mainAxisSize: MainAxisSize.min,
         children: [
           GestureDetector(
-            child: const Icon(CupertinoIcons.add),
             onTap: addNewTransaction,
+            child: const Icon(CupertinoIcons.add),
           )
         ],
       ),
@@ -262,8 +262,8 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
             floatingActionButton: Platform.isIOS
                 ? Container()
                 : FloatingActionButton(
-                    child: const Icon(Icons.add),
                     onPressed: _startAddNewTransaction,
+                    child: const Icon(Icons.add),
                   ),
           );
   }
