@@ -12,7 +12,7 @@ class TransactionItem extends StatefulWidget {
   }) : super(key: key);
 
   final Transaction transaction;
-  final Function deleteTransaction;
+  final DeleteTransaction deleteTransaction;
 
   @override
   State<TransactionItem> createState() => _TransactionItemState();
@@ -73,3 +73,5 @@ class _TransactionItemState extends State<TransactionItem> {
     );
   }
 }
+
+typedef DeleteTransaction = void Function(String id);

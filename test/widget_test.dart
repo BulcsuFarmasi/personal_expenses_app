@@ -7,8 +7,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-
-import 'package:personal_expenses_app/main.dart';
 import 'package:personal_expenses_app/widgets/app.dart';
 
 void main() {
