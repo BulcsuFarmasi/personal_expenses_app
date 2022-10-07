@@ -26,6 +26,5 @@ class IosAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   @override
-  // TODO: implement preferredSize
   Size get preferredSize => appBar.preferredSize;
 }
