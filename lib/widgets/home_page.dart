@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:personal_expenses_app/widgets/landscape_content.dart';
 import 'package:personal_expenses_app/models/transaction.dart';
 import 'package:personal_expenses_app/widgets/chart.dart';
 import 'package:personal_expenses_app/widgets/new_transaction.dart';
@@ -83,42 +84,6 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
     });
   }
 
-  List<Widget> _buildLandscapeContent(
-      MediaQueryData mediaQuery,
-      AppBar appBar,
-      ThemeData theme,
-      Widget transactionListWidget,
-      ) {
-    return [
-      Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            'Show Chart',
-            style: theme.textTheme.headline6,
-          ),
-          Switch.adaptive(
-              activeColor: theme.colorScheme.secondary,
-              value: _showChart,
-              onChanged: (value) {
-                setState(() {
-                  _showChart = value;
-                });
-              }),
-        ],
-      ),
-      if (_showChart)
-        SizedBox(
-          height: (mediaQuery.size.height -
-              appBar.preferredSize.height -
-              mediaQuery.padding.top) *
-              0.7,
-          child: Chart(_recentTransactions),
-        ),
-      transactionListWidget
-    ];
-  }
-
   List<Widget> _buildPortaitContent(
       MediaQueryData mediaQuery,
       AppBar appBar,
@@ -189,12 +154,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             if (isLandscape)
-              ..._buildLandscapeContent(
-                mediaQuery,
-                appBar as AppBar,
-                theme,
-                transactionListWidget,
-              ),
+              LandscapeContent(transactionListWidget: transactionListWidget, appBar: appBar, recentTransactions: _recentTransactions),
             if (!isLandscape)
               ..._buildPortaitContent(
                 mediaQuery,
